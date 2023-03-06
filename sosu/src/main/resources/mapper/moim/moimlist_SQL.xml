@@ -14,17 +14,15 @@
       M.*,
       SUBSTR(MO_TITLE,1,16) AS MOTT,
       NVL(F.F_SVNAME,0) AS MF_SVNAME,
-      MEM.M_NICKNAME
+      MEM.*
       FROM MOIM M, FILE_T F, MEMBER MEM
-      WHERE F.F_DEL_YN(+) =
-      'N'
+      WHERE F.F_DEL_YN(+) = 'N'
       AND F.F_MAIN_YN(+) = 'Y'
       AND M.MO_DEL_YN = 'N'
       AND F.F_TABLE(+) = 'M'
       AND M.M_IDX = MEM.M_IDX
       AND M.MO_CATEGORY = #{MO_CATEGORY}
-      AND
-      F.F_ARTICLE(+) = M.MO_IDX
+      AND F.F_ARTICLE(+) = M.MO_IDX
       <if test="MO_REGION != null">
          AND M.MO_REGION = #{MO_REGION}
       </if>

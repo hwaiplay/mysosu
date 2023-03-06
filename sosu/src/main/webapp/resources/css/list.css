@@ -144,6 +144,55 @@ option {
 
 }
 
+.champ {
+   background-color: #fff;
+   border: none;
+   font-size: 15px;
+   margin-top: 9px;
+   margin-top: 22px;
+    margin-left: -2px;
+    vertical-align: top;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 4px 10px 4px 8px;
+    margin-right: 4px;
+}
+
+.champ2 {
+   background-color: #fff;
+   border: none;
+   font-size: 15px;
+    margin-left: -2px;
+    vertical-align: top;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 4px 10px 4px 8px;
+    margin-right: 4px;
+}
+
+.champ2:hover, .champ2:active {
+   background-color: #fd8731;
+   color: #fff;
+   border: none;
+   border-radius: 10px;
+   font-size: 15px;
+   margin-left: -2px;
+   vertical-align: top;
+   font-weight: bold;
+   cursor: pointer;
+   padding: 4px 10px 4px 8px;
+   margin-right: 4px;
+}
+
+.king:hover,
+.king:active,
+.champ:hover,
+.champ:active {
+   color : #fff;
+   background-color: #fd8731;
+   border-radius: 10px;
+}
+
 /*모임 상세 카테고리*/
 .detail-cate{
     font-size: 17px;
