@@ -14,7 +14,7 @@
       M.*,
       SUBSTR(MO_TITLE,1,16) AS MOTT,
       NVL(F.F_SVNAME,0) AS MF_SVNAME,
-      MEM.*
+      MEM.M_NICKNAME
       FROM MOIM M, FILE_T F, MEMBER MEM
       WHERE F.F_DEL_YN(+) = 'N'
       AND F.F_MAIN_YN(+) = 'Y'
@@ -50,20 +50,6 @@
              (#{pageNum} -1)*#{amount} <AAA.RNUM  AND AAA.RNUM <= #{pageNum} * #{amount}
       ]]>
    </sql>
-
-
-   <!-- 페이징을 위한 모임 수 -->
-   <select id="moimTotalCount" parameterType="hashmap"
-      resultType="int">
-      SELECT COUNT(*) AS MO_COUNT
-      FROM MOIM
-      WHERE MO_DEL_YN = 'N'
-      AND
-      MO_CATEGORY = #{MO_CATEGORY}
-      <if test="MO_REGION != null">
-         AND MO_REGION = #{MO_REGION}
-      </if>
-   </select>
 
    <!-- 모임 검색(헤더, 해시태그) -->
    <select id="moimSearchList" parameterType="hashmap"
@@ -376,7 +362,7 @@
    <!-- 모임장소 수정 -->
    <update id="moimMapModify" parameterType="hashmap">
        <![CDATA[
-      UPDATE MOIM SET
+      UPDATE KAKAOMAP SET
       WII= #{WII},
       KYUNG = #{KYUNG},
       ADDRESS= #{ADDRESS}, 

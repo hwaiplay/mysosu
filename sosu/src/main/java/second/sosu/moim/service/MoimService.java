@@ -20,9 +20,6 @@ public interface MoimService {
    // 모임 갯수
    Map<String, Object> moimCount(Map<String, Object> map) throws Exception;
 
-   // 페이징을 위한 모임 토탈 카운트
-   int moimTotalCount(Map<String, Object> map);
-
    // 모임에 참가한 인원 리스트
    List<Map<String, Object>> moimMemberList(Map<String, Object> map, CommandMap commandMap) throws Exception;
 
@@ -57,8 +54,11 @@ public interface MoimService {
    void moimRePermit(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception;
 
    // 모임 수정
-   void moimModify(Map<String, Object> map, HttpServletRequest request) throws Exception;
-
+   void moimModify(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception;
+   
+   // 모임 지도 insert
+   void moimMapInsert(Map<String, Object> map) throws Exception;
+   
    // 모임 이미지 삭제
    void MoimImgDelete(String F_SVNAME) throws Exception;
 

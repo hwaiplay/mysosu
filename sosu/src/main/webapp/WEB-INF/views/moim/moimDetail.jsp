@@ -13,14 +13,12 @@
       style="text-align: center; width: 1000px; margin: 80px auto;">
 
       <input type="hidden" name="MO_IDX" value="${MO_IDX}" id="idx">
-      <input type="hidden" name="MO_CATEGORY" value="${MO_CATEGORY}"
-         id="cate"> 
-      <input type="hidden" name="sessionss" value="${sessionss}"
-         id="session"> 
+      <input type="hidden" name="MO_CATEGORY" value="${MO_CATEGORY}" id="cate"> 
+      <input type="hidden" name="sessionss" value="${sessionss}" id="session"> 
       <input type="hidden" name="WII" value="${Detail.WII}" id="WII"> 
       <input type="hidden" name="KYUNG" value="${Detail.KYUNG}" id="KYUNG"> 
-      <input type="hidden" name="KYUNG" value="${Detail.ADDRESS}" id="address"> 
-      <input type="hidden" name="KYUNG" value="${Detail.DEADDRESS}" id="deaddress"> 
+      <input type="hidden" name="ADDRESS" value="${Detail.ADDRESS}" id="address"> 
+      <input type="hidden" name="DEADDRESS" value="${Detail.DEADDRESS}" id="deaddress"> 
       
       <main>
         <div class="detailBody">
@@ -429,7 +427,7 @@
 
             <!-- 목록으로 버튼 -->
             <button type="button" class="mrgbtn"
-               onclick="javascript:history.back();">목록으로</button>
+               onclick="location.href='/moim/${MO_CATEGORY}.sosu'">목록으로</button>
 
             <!-- 방장일 때 보이는 -->
             <c:if
@@ -508,8 +506,9 @@ marker.setMap(map);
 
 // 인포윈도우로 장소에 대한 설명을 표시
 var infowindow = new kakao.maps.InfoWindow({
-    content: '<div style="width:150px;text-align:center;padding:6px 0;">'+add+'&nbsp;'+deadd+'</div>'
+    content: '<div style="width:150px;text-align:center;padding:6px 0;">'+add+'<br>'+deadd+'</div>'
 });
 infowindow.open(map, marker);
+
 </script>
 </body>

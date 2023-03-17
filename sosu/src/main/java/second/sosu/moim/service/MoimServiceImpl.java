@@ -48,12 +48,6 @@ public class MoimServiceImpl implements MoimService {
 		return resultMap;
 	}
 
-	// 페이징을 위한 모임 토탈 카운트
-	@Override
-	public int moimTotalCount(Map<String, Object> map) {
-		return moimDao.moimTotalCount(map);
-	}
-
 	// 모임 상세보기
 	@Override
 	public Map<String, Object> moimDetail(Map<String, Object> map, HttpSession session) throws Exception {
@@ -94,6 +88,7 @@ public class MoimServiceImpl implements MoimService {
 			moimDao.moimMapInsert(map);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		List<Map<String, Object>> list = fileUtils.fileInsert(map, request);
@@ -106,51 +101,51 @@ public class MoimServiceImpl implements MoimService {
 	// 모임 참가
 	@Override
 	public void moimJoin(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-
 		moimDao.moimJoin(map, session, commandMap);
-
 	}
 
 	// 모임 참가
 	@Override
 	public void moimReJoin(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-
 		moimDao.moimReJoin(map, session, commandMap);
-
 	}
 
 	// 모임 재참여 대기
 	@Override
 	public void moimRePermit(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-
 		moimDao.moimRePermit(map, session, commandMap);
-
 	}
 
 	// 모임 수정
 	@Override
-	public void moimModify(Map<String, Object> map, HttpServletRequest request) throws Exception {
-
-		moimDao.moimModify(map);
-
-		if (map.get("MAP_IDX") == null) {
-			try {
-				map.put("MO_IDX", map.get("MO_IDX"));
+	public void moimModify(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
+		
+		Map<String, Object> dMap = moimDao.moimDetail(map, session);
+		
+		try {
+			if(dMap.get("MAP_IDX") != null) {
+				moimDao.moimMapModify(map);
+			} else if (dMap.get("MAP_IDX") == null) {
 				moimDao.moimMapInsert(map);
-			} catch (Exception e) {
 			}
-		} else if (map.get("MAP_IDX") != null) {
-			moimDao.moimMapModify(map);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
+		
+		moimDao.moimModify(map);
+		
 		List<Map<String, Object>> list = fileUtils.fileInsert(map, request);
 
 		for (int i = 0, size = list.size(); i < size; i++) {
 			moimDao.moimImg(list.get(i));
 		}
+	}
+	
+	
+	
+	@Override
+	public void moimMapInsert(Map<String, Object> map) throws Exception {
+		moimDao.moimMapInsert(map);
 	}
 
 	// 모임 이미지 삭제

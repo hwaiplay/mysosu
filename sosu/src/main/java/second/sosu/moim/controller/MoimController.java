@@ -43,22 +43,17 @@ public class MoimController {
 
 		commandMap.getMap().put("MO_CATEGORY", MO_CATEGORY);
 
-		int total = moimService.moimTotalCount(commandMap.getMap()); // 모임 총 갯수
-
-		commandMap.getMap().put("amount", cri.getAmount());
-		commandMap.getMap().put("pageNum", cri.getPageNum());
-
-		int ramount = (int) commandMap.get("amount");
-		int rpageNum = (int) commandMap.get("pageNum");
-
-		cri.setAmount(ramount);
-		cri.setPageNum(rpageNum);
-
+		Map<String, Object> map = moimService.moimCount(commandMap.getMap());
+		
+		int mo_total = Integer.parseInt(String.valueOf(map.get("MO_COUNT"))); // 모임 총 갯수
+		
+		commandMap.put("amount", cri.getAmount());
+		commandMap.put("pageNum", cri.getPageNum());
+		
 		ModelAndView mv = new ModelAndView("/moim/moimlist");
 		mv.setViewName("moim/moimlist");
 
 		moimService.moimClose();
-		Map<String, Object> map = moimService.moimCount(commandMap.getMap());
 
 		if (MO_REGION != null) {
 			commandMap.put("MO_REGION", MO_REGION);
@@ -101,7 +96,7 @@ public class MoimController {
 		mv.addObject("list", moimService.moimList(commandMap.getMap(), session));
 		mv.addObject("count", map);
 		mv.addObject("sessionss", session.getAttribute("M_IDX"));
-		mv.addObject("pageMaker", new PageDTO(cri, total, moimService.moimList(commandMap.getMap(), session)));
+		mv.addObject("pageMaker", new PageDTO(cri, mo_total, moimService.moimList(commandMap.getMap(), session)));
 		mv.addObject("MO_REGION", commandMap.get(MO_REGION));
 
 		return mv;
@@ -173,7 +168,7 @@ public class MoimController {
 		commandMap.getMap().put("MO_IDX", MO_IDX);
 
 		Map<String, Object> map = moimService.moimDetail(commandMap.getMap(), session);
-
+		
 		// 모임에 참여한 인원 리스트
 		List<Map<String, Object>> list = moimService.moimMemberList(commandMap.getMap(), commandMap);
 
@@ -321,7 +316,7 @@ public class MoimController {
 		List<Map<String, Object>> Flist = moimService.selectMoimImg(commandMap.getMap(), commandMap);
 
 		Map<String, Object> map = moimService.moimDetail(commandMap.getMap(), session);
-
+		
 		String MO_DETAIL = map.get("MO_DETAIL").toString();
 		MO_DETAIL = MO_DETAIL.replaceAll("<br/>", "\r\n");
 		map.put("MO_DETAIL", MO_DETAIL);
@@ -335,17 +330,18 @@ public class MoimController {
 	// 모임 수정 구동
 	@RequestMapping("/moim/moimModify.pro")
 	public ModelAndView moimModify(@RequestParam("MO_CATEGORY") String MO_CATEGORY,
-			@RequestParam("MO_IDX") String MO_IDX, CommandMap commandMap, HttpServletRequest request) throws Exception {
+			@RequestParam("MO_IDX") String MO_IDX, CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		// ajax로 받아오기 위해 @RequestParam 사용
 
 		ModelAndView mv = new ModelAndView("redirect:/moim/" + MO_CATEGORY + "/" + MO_IDX + ".sosu");
 
-		String MO_DETAIL = (String) (commandMap.get("MO_DETAIL"));
-		MO_DETAIL = MO_DETAIL.replaceAll("(\r\n|\r|\n|\n\r)", "<br/>");
+		String MO_DETAIL = (String) commandMap.get("MO_DETAIL");
+		
+		MO_DETAIL = MO_DETAIL.replaceAll(System.lineSeparator(), "<br/>");
 		commandMap.put("MO_DETAIL", MO_DETAIL);
-
-		moimService.moimModify(commandMap.getMap(), request);
-
+		
+		moimService.moimModify(commandMap.getMap(), request, session);
+		
 		return mv;
 	}
 

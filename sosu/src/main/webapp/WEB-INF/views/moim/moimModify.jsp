@@ -190,7 +190,22 @@
             <td class="contents">
                <input type="time" class="form-control" name="MO_DEADTIME" id="MO_DEADTIME" value="${modify.MO_DEADTIME }">
             </td>
-         </tr>  
+         </tr> 
+         
+         <tr>
+            <th class="header"><label for="ADDRESS" >모임 장소</label></th>
+            <td class="contents">
+               <input type="text" class="form-control" id="ADDRESS" readonly="readonly" name="ADDRESS" value="${modify.ADDRESS}">
+               <button type="button" class="searchMap"
+                  		onclick="kaMap()">주소 검색</button>
+               <br/>   		
+               <input type="text" id="DEADDRESS" placeholder="상세주소 입력" name="DEADDRESS" value="${modify.DEADDRESS}">
+               <div id="map" style="width:500px; height:400px; margin-top: 10px;"></div>
+               <input type="hidden" name="WII" value="${modify.WII}" id="WII"> 
+     	 	   <input type="hidden" name="KYUNG" value="${modify.KYUNG}" id="KYUNG"> 
+     	 	   <input type="hidden" name="MAP_IDX" value="${modify.MAP_IDX}"> 
+            </td>
+         </tr> 
             
          <tr>
             <th class="header"><label for="textArea_byteLimit" >내용</label></th>
@@ -243,7 +258,7 @@
    </tbody>
    </table>
    
-        <input type="hidden" name="MO_IDX" value="${modify.MO_IDX}">
+        <input type="hidden" id="MO_IDX" name="MO_IDX" value="${modify.MO_IDX}">
          <button type="submit" id="moB" class="mrgbtn" style="">수정</button>
          </form>
       </div>
