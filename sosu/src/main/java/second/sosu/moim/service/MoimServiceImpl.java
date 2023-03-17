@@ -119,11 +119,11 @@ public class MoimServiceImpl implements MoimService {
 	// 모임 수정
 	@Override
 	public void moimModify(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
-		
+
 		Map<String, Object> dMap = moimDao.moimDetail(map, session);
-		
+
 		try {
-			if(dMap.get("MAP_IDX") != null) {
+			if (dMap.get("MAP_IDX") != null) {
 				moimDao.moimMapModify(map);
 			} else if (dMap.get("MAP_IDX") == null) {
 				moimDao.moimMapInsert(map);
@@ -131,18 +131,16 @@ public class MoimServiceImpl implements MoimService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		moimDao.moimModify(map);
-		
+
 		List<Map<String, Object>> list = fileUtils.fileInsert(map, request);
 
 		for (int i = 0, size = list.size(); i < size; i++) {
 			moimDao.moimImg(list.get(i));
 		}
 	}
-	
-	
-	
+
 	@Override
 	public void moimMapInsert(Map<String, Object> map) throws Exception {
 		moimDao.moimMapInsert(map);

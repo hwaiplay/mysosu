@@ -51,6 +51,7 @@
       ]]>
    </sql>
 
+
    <!-- 모임 검색(헤더, 해시태그) -->
    <select id="moimSearchList" parameterType="hashmap"
       resultType="hashmap">
@@ -281,10 +282,17 @@
    <!-- 리뷰 유무 -->
    <select id="reviewYn" parameterType="hashmap"
       resultType="hashmap">
-        SELECT COUNT(*) AS RV_YN
-      FROM REVIEW
-      WHERE MO_IDX = #{MO_IDX}
-      AND M_IDX = #{M_IDX}
+	    SELECT COUNT(RV_IDX)  AS RV_YN
+		FROM REVIEW R, PARTYMEM P, MOIM M
+		WHERE R.M_IDX = P.M_IDX
+		AND M.M_IDX != P.M_IDX
+		AND P.MO_IDX = M.MO_IDX
+		AND P.MO_IDX = R.MO_IDX
+		AND M.MO_CLOSE_YN = 'Y'
+		AND P.P_BAN_YN = 'N'
+		AND P.P_FINAL_YN = 'Y'
+		AND R.MO_IDX = #{MO_IDX}
+		AND R.M_IDX = #{M_IDX}
    </select>
    
    <!-- 내가 남긴 리뷰  -->
@@ -362,7 +370,7 @@
    <!-- 모임장소 수정 -->
    <update id="moimMapModify" parameterType="hashmap">
        <![CDATA[
-      UPDATE KAKAOMAP SET
+      UPDATE MOIM SET
       WII= #{WII},
       KYUNG = #{KYUNG},
       ADDRESS= #{ADDRESS}, 
@@ -409,5 +417,5 @@
       WHERE MO_IDX = #{MO_IDX}
       ]]>
    </update>
-
+   
 </mapper>

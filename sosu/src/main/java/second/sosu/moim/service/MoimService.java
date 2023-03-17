@@ -63,8 +63,8 @@ public interface MoimService {
    void MoimImgDelete(String F_SVNAME) throws Exception;
 
    // 모임 삭제
-   void moimDelete(Map<String, Object> map) throws Exception; // 추후 세션추가
-
+   void moimDelete(Map<String, Object> map) throws Exception;
+   
    // 모임 조기 마감
    void moimSelfClose(Map<String, Object> map) throws Exception;
 

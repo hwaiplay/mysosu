@@ -42,7 +42,7 @@ public class MoimDao extends AbstractDAO {
 					moimList.get(i).get("MO_IDX"));
 			moimList.get(i).put("MOMEM_COUNT", moimMemCount.get("MOMEM_COUNT"));
 		}
-		
+
 		// 모임 스크랩 수
 		for (int i = 0; i < moimList.size(); i++) {
 

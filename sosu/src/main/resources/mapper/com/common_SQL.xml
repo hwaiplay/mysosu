@@ -36,14 +36,14 @@
 	</insert>
 
 	<!--모임 찜 Delete -->
-	<insert id="zzimDelete" parameterType="hashmap">
+	<delete id="zzimDelete" parameterType="hashmap">
          <![CDATA[
     DELETE ZZIM 
     WHERE M_IDX = #{M_IDX}  
     AND Z_TABLE = #{Z_TABLE}  
     AND Z_ARTICLE = #{Z_ARTICLE}
             ]]>
-	</insert>
+	</delete>
 
 
 

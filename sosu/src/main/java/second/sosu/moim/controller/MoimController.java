@@ -368,7 +368,7 @@ public class MoimController {
 	public ModelAndView moimDelete(CommandMap commandMap, HttpSession session) throws Exception {
 
 		Map<String, Object> map = moimService.moimDetail(commandMap.getMap(), session);
-
+		
 		String cate = map.get("MO_CATEGORY").toString();
 
 		ModelAndView mv = new ModelAndView("redirect:/moim/" + cate + ".sosu");
@@ -377,7 +377,7 @@ public class MoimController {
 
 		return mv;
 	}
-
+	
 	// 모임 참가(승인요청이 필요 없는 경우)
 	@RequestMapping("/moim/moimJoin.sosu")
 	public ModelAndView moimJoin(CommandMap commandMap, HttpSession session) throws Exception {
@@ -418,7 +418,7 @@ public class MoimController {
 		return mv;
 	}
 
-	// 모임 재참여
+	// 모임 재참여요청
 	@RequestMapping("/moim/moimRePermit.sosu")
 	public ModelAndView moimRePermit(CommandMap commandMap, HttpSession session) throws Exception {
 
