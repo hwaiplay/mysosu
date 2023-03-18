@@ -283,20 +283,13 @@
    <select id="reviewYn" parameterType="hashmap"
       resultType="hashmap">
 	    SELECT COUNT(RV_IDX)  AS RV_YN
-		FROM REVIEW R, PARTYMEM P, MOIM M
-		WHERE R.M_IDX = P.M_IDX
-		AND M.M_IDX != P.M_IDX
-		AND P.MO_IDX = M.MO_IDX
-		AND P.MO_IDX = R.MO_IDX
-		AND M.MO_CLOSE_YN = 'Y'
-		AND P.P_BAN_YN = 'N'
-		AND P.P_FINAL_YN = 'Y'
-		AND R.MO_IDX = #{MO_IDX}
-		AND R.M_IDX = #{M_IDX}
+		FROM REVIEW
+		WHERE MO_IDX = #{MO_IDX}
+		AND M_IDX = #{M_IDX}
    </select>
    
    <!-- 내가 남긴 리뷰  -->
-   <select id="myReviewNum" parameterType="hashmap" resultType="hashmap">
+   <select id="reviewGo" parameterType="hashmap" resultType="hashmap">
       SELECT RV_IDX, M_IDX
       FROM REVIEW
       WHERE M_IDX = #{M_IDX}
@@ -389,14 +382,13 @@
    </update>
 
    <!-- 모임 마감일과 시간이 지나면 모임마감 -->
-   <update id="moimClose" parameterType="hashmap">
+   <select id="moimClose" parameterType="hashmap" statementType="CALLABLE">
        <![CDATA[
-     UPDATE MOIM
-    SET MO_CLOSE_YN = 'Y'
-     WHERE TO_CHAR(MO_DEADLINE, 'YYMMDD') <= TO_CHAR(SYSDATE, 'YYMMDD') 
-     AND MO_DEADTIME <= TO_CHAR(SYSDATE, 'HH24:MI')
+     { 
+     CALL MO_AUTO_CLOSE 
+     }
       ]]>
-   </update>
+   </select>
 
    <!-- 참여한 모임 탈퇴하기 -->
    <update id="moimExit" parameterType="hashmap">

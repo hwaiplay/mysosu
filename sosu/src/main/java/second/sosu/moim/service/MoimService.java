@@ -68,9 +68,6 @@ public interface MoimService {
    // 모임 조기 마감
    void moimSelfClose(Map<String, Object> map) throws Exception;
 
-   // 모임 자동 마감
-   void moimClose() throws Exception;
-
    // 모임 탈퇴하기
    void moimExit(Map<String, Object> map, HttpSession session) throws Exception;
 

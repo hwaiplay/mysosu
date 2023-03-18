@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,8 @@ import second.sosu.moim.service.MoimService;
 public class MoimController {
 
 	Logger log = Logger.getLogger(this.getClass());
+	
+    @Autowired SqlSessionTemplate oracle;
 
 	@Resource(name = "moimService")
 	private MoimService moimService;
@@ -38,6 +42,8 @@ public class MoimController {
 			@RequestParam(value = "KEYWORD2", required = false) String KEYWORD2, CommandMap commandMap,
 			HttpSession session, HttpServletRequest request) throws Exception {
 
+		oracle.selectOne("moim.moimClose");
+		
 		HttpSession csession = request.getSession();
 		csession.setAttribute("MO_CATEGORY", MO_CATEGORY);
 
@@ -53,7 +59,7 @@ public class MoimController {
 		ModelAndView mv = new ModelAndView("/moim/moimlist");
 		mv.setViewName("moim/moimlist");
 
-		moimService.moimClose();
+		
 
 		if (MO_REGION != null) {
 			commandMap.put("MO_REGION", MO_REGION);
@@ -115,6 +121,8 @@ public class MoimController {
 		String[] category = { "culture", "sports", "game", "outdoor", "food", "etc" };
 
 		ModelAndView mv = new ModelAndView();
+		
+		oracle.selectOne("moim.moimClose");
 
 		if (KEYWORD2 == null) {
 
@@ -179,6 +187,9 @@ public class MoimController {
 		List<Map<String, Object>> Flist = moimService.selectMoimImg(commandMap.getMap(), commandMap);
 
 		ModelAndView mv = new ModelAndView("/moim/moimDetail");
+		
+		oracle.selectOne("moim.moimClose");
+		
 		mv.setViewName("moim/moimDetail");
 
 		if (session.getAttribute("M_IDX") != null) {

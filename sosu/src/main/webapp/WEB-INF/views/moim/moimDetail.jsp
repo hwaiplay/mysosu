@@ -25,7 +25,7 @@
             <div class="imgArea">
                <!-- 메인 사진 -->
                   <c:if test="${Detail.MF_SVNAME ne '0'}">
-                     <img src="/resources/img/upload/${Detail.MF_SVNAME}"onerror="this.style.display='none'"
+                     <img src="/resources/img/upload/${Detail.MF_SVNAME}" onerror="this.style.display='none'"
                      style="max-height: 561px;max-width: -webkit-fill-available;">
                   </c:if>
             </div>
@@ -169,7 +169,7 @@
                      <c:forEach items="${Flist}" var="fl">
                         <c:if test="${fl.F_MAIN_YN eq 'N'}">
                            <a href="/resources/img/upload/${fl.F_SVNAME}" class="glightbox">
-                           <img src="/resources/img/upload/${fl.F_SVNAME}" class="my_img">
+                           <img src="/resources/img/upload/${fl.F_SVNAME}" class="my_img"  onerror="this.style.display='none'">
                            </a>
                         </c:if>
                      </c:forEach>

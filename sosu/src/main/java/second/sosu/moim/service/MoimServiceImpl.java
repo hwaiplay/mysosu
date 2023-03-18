@@ -191,10 +191,6 @@ public class MoimServiceImpl implements MoimService {
 		moimDao.moimSelfClose(map);
 	}
 
-	// 모임 자동 마감
-	@Override
-	public void moimClose() throws Exception {
-		moimDao.moimClose();
-	}
+	
 
 }

@@ -28,10 +28,6 @@ public class AbstractDAO {
       pringQueryId(queryId);
       return sqlSession.update(queryId, params);
    }
-   public Object update2(String queryId) {//모임 자동마감
-         pringQueryId(queryId);
-         return sqlSession.update(queryId);
-   }
    public Object delete(String queryId, Object params) {//삭제
       pringQueryId(queryId);
       return sqlSession.delete(queryId, params);
